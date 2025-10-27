@@ -1,8 +1,8 @@
 # CA-only MOF Training
 
 This repository provides code to train Gradient Boosting models on **Category-Algebra (CA) features** of MOFs, using the benchmark gas property datasets originally introduced by Orhan et al. (2021).
----
-## Data Sources
+
+# Data Sources
 
 The four datasets used here were **adapted from Orhan et al. (2021)**  
 [Descriptor-Based Prediction of Gas Adsorption in MOFs](https://doi.org/10.1021/acs.jpcc.1c04157).
@@ -13,14 +13,13 @@ The four datasets used here were **adapted from Orhan et al. (2021)**
   - **Property spreadsheets** (Henry’s constants, uptakes, self-diffusion coefficients)
 
 We followed the CSTL (2025) protocol to filter, clean, and standardize these data.
-
 ---
 
-## Structure Conversion (CIF → XYZ)
+#Structure Conversion (CIF → XYZ)
 
 We include here a helper script (XYZ_Convertor.py) to convert raw MOF CIF files into `.xyz` files for downstream processing:
 
-## Feature Generation
+# Feature Generation
 
 The CA (Category-Algebra) features used in this work are generated directly from the MOF structures.  
 Our feature construction **follows the approach outlined by Grayson & Stillman (2002)**, where ideas from commutative algebra are used to define algebraic invariants for structured data:
@@ -30,7 +29,7 @@ Our feature construction **follows the approach outlined by Grayson & Stillman (
 These invariants are adapted to MOF structures in order to build category-specific algebraic descriptors for machine learning.
 
 
-## Supported Properties
+# Supported Properties
 
 The training code supports the four focus properties:
 
@@ -46,13 +45,13 @@ Each Excel file must contain:
 The MOF IDs should match those in your **features CSV**.
 ---
 
-## Features
+# Features
 
 - **Input features CSV**: generated separately using our CA feature extraction pipeline.  
 - Each row = one MOF.  
 ---
 
-## Training Protocol
+# Training Protocol
 
 For each property:
 - Perform **10 random splits**  
