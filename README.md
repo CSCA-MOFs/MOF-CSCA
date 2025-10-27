@@ -8,7 +8,7 @@ Our workflow builds on the benchmark gas property datasets introduced by [Orhan 
 ## 📊 Data Sources
 
 We adapted the four datasets from Orhan et al. (2021):  
-- [Original repository – MOF-O2N2 GitHub](https://github.com/ibarishorhan/MOF-O2N2/tree/main/mofScripts)  
+- [Original repository – MOF-O2N2 GitHub](https://github.com/ibarisorhan/MOF-O2N2)  
 
 From this resource you can obtain:  
 - **Structures** (CIF files of MOFs)  
