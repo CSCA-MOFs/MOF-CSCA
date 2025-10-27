@@ -1,6 +1,6 @@
 # Commutative Algebra MOF Training
 
-This repository provides code to train Gradient Boosting models on **Category-Algebra (CA) features** of MOFs, using the benchmark gas property datasets originally introduced by Orhan et al. (2021).
+This repository provides code to train Gradient Boosting models on **Category-Algebra (CA) features** of MOFs, using the gas property datasets as provided by Orhan et al. (2021).
 
 # Data Sources
 
