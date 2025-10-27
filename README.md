@@ -27,13 +27,15 @@ We include a script to convert CIF files into `.xyz` format:
 
 ## Feature Generation
 
-The CA features are generated directly from MOF structures.  
-They follow the approach of:
+The CA features are generated directly from MOF structures after conversion from CIF to XYZ format.
+This step ensures that the structural data are standardized and ready for algebraic processing.
 
-> D. R. Grayson and M. E. Stillman. *Macaulay2: a software system for research in algebraic geometry*, 2002.  
+The feature construction follows the approach of:
 
-These algebraic ideas are adapted to MOFs to create category-specific descriptors for machine learning.
+>D. R. Grayson and M. E. Stillman. Macaulay2: a software system for research in algebraic geometry, 2002.
 
+These algebraic ideas are adapted to MOFs, where category-specific invariants are computed from the XYZ representations.
+The resulting descriptors form the input features for training machine learning models.
 ---
 
 ## Properties Supported
