@@ -41,7 +41,7 @@ The training code supports the four focus properties:
 Each Excel file must contain:
 - A MOF ID column (default: `MOFRefcodes`)  
 - One column with the property values.
-These datasets are found here https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data
+- These datasets are found here https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data
 The MOF IDs should match those in your **features CSV**.
 ---
 
