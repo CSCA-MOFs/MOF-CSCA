@@ -16,9 +16,23 @@ We followed the CSTL (2025) protocol to filter, clean, and standardize these dat
 
 ---
 
+## Structure Conversion (CIF → XYZ)
+
+We include here a helper script (XYZ_Convertor.py) to convert raw MOF CIF files into `.xyz` files for downstream processing:
+
+## Feature Generation
+
+The CA (Category-Algebra) features used in this work are generated directly from the MOF structures.  
+Our feature construction **follows the approach outlined by Grayson & Stillman (2002)**, where ideas from commutative algebra are used to define algebraic invariants for structured data:
+
+> D. R. Grayson and M. E. Stillman. *Macaulay2, a software system for research in algebraic geometry*, 2002.
+
+These invariants are adapted to MOF structures in order to build category-specific algebraic descriptors for machine learning.
+
+
 ## Supported Properties
 
-This code supports the four focus properties:
+The training code supports the four focus properties:
 
 - `HenrysconstantN2.xlsx`  
 - `HenrysconstantO2.xlsx`  
