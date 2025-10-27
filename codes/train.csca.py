@@ -4,7 +4,7 @@ import numpy as np, pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
 
 try:
     from scipy.stats import pearsonr
@@ -19,8 +19,8 @@ PROP_FILES = {
     "O2uptakemolkg":"O2uptakemolkg.xlsx",
 }
 ALIASES = {"henryconstantn2":"HenrysconstantN2"}
-SPLIT_SEEDS = list(range(23,33))   
-MODEL_SEEDS = list(range(13,23))   
+SPLIT_SEEDS = list(range(23,33))   # 10 split seeds (23..32)
+MODEL_SEEDS = list(range(13,23))   # 10 model seeds (13..22)
 
 def args():
     p = argparse.ArgumentParser()
@@ -64,7 +64,8 @@ def fit_one(seed, Xtr, ytr, Xte, hp):
         min_samples_split=hp["min_samples_split"],
         min_samples_leaf=hp["min_samples_leaf"],
     )
-    m.fit(Xtr,ytr); return m.predict(Xte)
+    m.fit(Xtr,ytr)
+    return m.predict(Xte)
 
 def train_prop(dfX, labels_xlsx, prop, id_col_labels, hp):
     dfY = pd.read_excel(labels_xlsx)[[id_col_labels, prop]].dropna()
@@ -74,11 +75,11 @@ def train_prop(dfX, labels_xlsx, prop, id_col_labels, hp):
     X = StandardScaler().fit_transform(df.drop(columns=[prop]).values)
     y = df[prop].values
 
-    rps, r2s, maes = [], [], []
+    rps, r2s, maes, rmses = [], [], [], []
     for s in SPLIT_SEEDS:
         idx = np.arange(len(X))
         tr, tmp = train_test_split(idx, test_size=0.20, random_state=s)
-        va, te  = train_test_split(tmp, test_size=0.50, random_state=s)
+        va, te  = train_test_split(tmp, test_size=0.50, random_state=s)  # va unused, te is 10%
         Xtr, ytr, Xte, yte = X[tr], y[tr], X[te], y[te]
         pred = np.zeros_like(yte, float)
         for ms in MODEL_SEEDS:
@@ -87,9 +88,13 @@ def train_prop(dfX, labels_xlsx, prop, id_col_labels, hp):
         rps.append(rp2(yte, pred))
         r2s.append(float(r2_score(yte, pred)))
         maes.append(float(mean_absolute_error(yte, pred)))
-    return {"rp2_mean": float(np.mean(rps)),
-            "r2_mean":  float(np.mean(r2s)),
-            "mae_mean": float(np.mean(maes))}
+        rmses.append(float(np.sqrt(mean_squared_error(yte, pred))))
+    return {
+        "rp2_mean": float(np.mean(rps)),
+        "r2_mean":  float(np.mean(r2s)),
+        "mae_mean": float(np.mean(maes)),
+        "rmse_mean": float(np.mean(rmses)),
+    }
 
 def main():
     a = args()
@@ -108,9 +113,10 @@ def main():
     for prop in props:
         res = train_prop(dfX, label_path(prop, a.label_dir), prop, a.id_col_labels, hp)
         rows.append({"property":prop, **res})
-        print(f"{prop}: r_p^2={res['rp2_mean']:.4f}  R^2={res['r2_mean']:.4f}  MAE={res['mae_mean']:.3e}")
-    pd.DataFrame(rows).to_csv(os.path.join(a.out_dir,"summary_CA_only_means.csv"), index=False)
-    print("Saved →", os.path.join(a.out_dir,"summary_CA_only_means.csv"))
+        print(f"{prop}: r_p^2={res['rp2_mean']:.4f}  R^2={res['r2_mean']:.4f}  MAE={res['mae_mean']:.3e}  RMSE={res['rmse_mean']:.3e}")
+    out_csv = os.path.join(a.out_dir,"summary_CA_only_means.csv")
+    pd.DataFrame(rows).to_csv(out_csv, index=False)
+    print("Saved →", out_csv)
 
 if __name__ == "__main__":
     os.environ.setdefault("OMP_NUM_THREADS","1")
