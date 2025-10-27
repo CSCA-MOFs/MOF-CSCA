@@ -17,7 +17,7 @@ We followed the Orhan et al. (2021) protocol to filter, clean, and standardize t
 
 #Structure Conversion (CIF → XYZ)
 
-We include here a helper script (XYZ_Convertor.py) to convert raw MOF CIF files into `.xyz` files for downstream processing:
+We include here a helper script (https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py) to convert raw MOF CIF files into `.xyz` files for downstream processing:
 
 # Feature Generation
 
