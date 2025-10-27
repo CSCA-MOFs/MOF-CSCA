@@ -1,7 +1,7 @@
 # Commutative Algebra MOF Training
 
 This repository provides code to train **Gradient Boosting models** on **Category-Algebra (CA) features** of Metal–Organic Frameworks (MOFs).  
-The workflow builds on benchmark gas property datasets from [Orhan et al. (2021)](https://github.com/ibarisorhan/MOF-O2N2).
+The workflow builds on the four property datasets from [Orhan et al. (2021)](https://github.com/ibarisorhan/MOF-O2N2).
 
 ---
 
