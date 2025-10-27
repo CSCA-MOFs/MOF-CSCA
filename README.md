@@ -1,65 +1,72 @@
-# Commutative Algebra MOF Training
+# 🌐 Commutative Algebra MOF Training
 
-This repository provides code to train Gradient Boosting models on **Category-Algebra (CA) features** of MOFs, using the gas property datasets as provided by Orhan et al. (2021).
+This repository provides code to train **Gradient Boosting models** on **Category-Algebra (CA) features** of Metal–Organic Frameworks (MOFs).  
+Our workflow builds on the benchmark gas property datasets introduced by [Orhan et al. (2021)](https://doi.org/10.1021/acs.jpcc.1c04157).
 
-# Data Sources
-
-The four datasets used here were **adapted from Orhan et al. (2021)**  
-[Descriptor-Based Prediction of Gas Adsorption in MOFs](https://doi.org/10.1021/acs.jpcc.1c04157).
-
-- Original repository: [MOF-O2N2 GitHub](https://github.com/ibarishorhan/MOF-O2N2/tree/main/mofScripts)  
-- From this repo you can obtain:
-  - **Structures** (CIF files of MOFs)
-  - **Property spreadsheets** (Henry’s constants, uptakes for O$_2$ and N$_2$)
-
-We followed the Orhan et al. (2021) protocol to filter, clean, and standardize these data.
 ---
 
-#Structure Conversion (CIF → XYZ)
+## 📊 Data Sources
 
-We include here a helper script (https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py) to convert raw MOF CIF files into `.xyz` files for downstream processing:
+We adapted the four datasets from Orhan et al. (2021):  
+- [Original repository – MOF-O2N2 GitHub](https://github.com/ibarishorhan/MOF-O2N2/tree/main/mofScripts)  
 
-# Feature Generation
+From this resource you can obtain:  
+- **Structures** (CIF files of MOFs)  
+- **Property spreadsheets** (Henry’s constants and uptakes for O₂ and N₂)  
 
-The CA (Category-Algebra) features used in this work are generated directly from the MOF structures.  
-Our feature construction **follows the approach outlined by Grayson & Stillman (2002)**, where ideas from commutative algebra are used to define algebraic invariants for structured data:
+We carefully followed the Orhan et al. (2021) protocol to filter, clean, and standardize the data.
 
-> D. R. Grayson and M. E. Stillman. *Macaulay2, a software system for research in algebraic geometry*, 2002.
+---
 
-These invariants are adapted to MOF structures in order to build category-specific algebraic descriptors for machine learning.
+## 🔄 Structure Conversion (CIF → XYZ)
 
+We provide a helper script to convert raw CIF structures into `.xyz` format for downstream processing:  
+👉 [XYZ_Generator.py](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py)
 
-# Supported Properties
+---
 
-The training code supports the four focus properties:
+## 🧮 Feature Generation
+
+CA features are generated directly from MOF structures.  
+Our construction draws on the algebraic framework of Grayson & Stillman (2002):  
+
+> D. R. Grayson and M. E. Stillman. *Macaulay2: a software system for research in algebraic geometry*, 2002.  
+
+These invariants are adapted to MOFs, creating **category-specific algebraic descriptors** that can be used for machine learning.
+
+---
+
+## 📑 Supported Properties
+
+The training code supports the following property files:
 
 - `HenrysconstantN2.xlsx`  
 - `HenrysconstantO2.xlsx`  
 - `N2uptakemolkg.xlsx`  
 - `O2uptakemolkg.xlsx`  
 
-Each Excel file must contain:
-- A MOF ID column (default: `MOFRefcodes`)  
-- One column with the property values.
-- These datasets are found here https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data
--The MOF IDs should match those in your **features CSV**.
----
+Each Excel dataset must include:  
+- A **MOF ID column** (default: `MOFRefcodes`)  
+- A **property value column**  
 
-# Features
-
-- **Input features CSV**: generated separately using our CA feature extraction pipeline.  
-- Each row = one MOF.  
----
-
-# Training Procedure
-
-For each property:
-- Perform **10 random splits**  
-  - 80% train, 10% validation, 10% test  
-- For each split, train **10 models**   
-- Average predictions across 10 models (per split)  
-- Compute metrics  
-- Final result = **mean across 10 splits** 
+➡️ These files are available in the [`data`](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data) folder.  
+The MOF IDs must match those in your **features CSV**.
 
 ---
 
+## 📂 Features
+
+- **Input file**: Features CSV, generated separately using the CA feature extraction pipeline.  
+- **One row = one MOF** with its descriptors.  
+
+---
+
+## ⚙️ Training Protocol
+
+For each property:  
+- 🔀 Perform **10 random splits**  
+  - 80% training / 10% validation / 10% testing  
+- 🏋️ Train **10 Gradient Boosting models** per split  
+- 📊 Average predictions across models  
+- ✅ Compute metrics (MAE, RMSE, Pearson’s R_p²)  
+- 📈 Final score = **mean across 10 splits**
