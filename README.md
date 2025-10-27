@@ -42,7 +42,7 @@ Each Excel file must contain:
 - A MOF ID column (default: `MOFRefcodes`)  
 - One column with the property values.
 - These datasets are found here https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data
-The MOF IDs should match those in your **features CSV**.
+-The MOF IDs should match those in your **features CSV**.
 ---
 
 # Features
@@ -51,7 +51,7 @@ The MOF IDs should match those in your **features CSV**.
 - Each row = one MOF.  
 ---
 
-# Training Protocol
+# Training Procedure
 
 For each property:
 - Perform **10 random splits**  
