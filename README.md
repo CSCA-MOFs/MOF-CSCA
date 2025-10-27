@@ -10,7 +10,7 @@ The four datasets used here were **adapted from Orhan et al. (2021)**
 - Original repository: [MOF-O2N2 GitHub](https://github.com/ibarishorhan/MOF-O2N2/tree/main/mofScripts)  
 - From this repo you can obtain:
   - **Structures** (CIF files of MOFs)
-  - **Property spreadsheets** (Henry’s constants, uptakes for O_2 and N_2)
+  - **Property spreadsheets** (Henry’s constants, uptakes for O$_2$ and N$_2$)
 
 We followed the Orhan et al. (2021) protocol to filter, clean, and standardize these data.
 ---
