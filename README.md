@@ -1,72 +1,70 @@
-# 🌐 Commutative Algebra MOF Training
+# Commutative Algebra MOF Training
 
 This repository provides code to train **Gradient Boosting models** on **Category-Algebra (CA) features** of Metal–Organic Frameworks (MOFs).  
-Our workflow builds on the benchmark gas property datasets introduced by [Orhan et al. (2021)](https://doi.org/10.1021/acs.jpcc.1c04157).
+The workflow builds on benchmark gas property datasets from [Orhan et al. (2021)](https://doi.org/10.1021/acs.jpcc.1c04157).
 
 ---
 
-## 📊 Data Sources
+## Data Sources
 
-We adapted the four datasets from Orhan et al. (2021):  
-- [Original repository – MOF-O2N2 GitHub](https://github.com/ibarisorhan/MOF-O2N2)  
+We adapted four datasets from Orhan et al. (2021):  
+- [MOF-O2N2 GitHub](https://github.com/ibarisorhan/MOF-O2N2)  
 
-From this resource you can obtain:  
-- **Structures** (CIF files of MOFs)  
-- **Property spreadsheets** (Henry’s constants and uptakes for O₂ and N₂)  
+These provide:  
+- MOF structures (CIF files)  
+- Property spreadsheets (Henry’s constants and uptakes for O₂ and N₂)  
 
-We carefully followed the Orhan et al. (2021) protocol to filter, clean, and standardize the data.
-
----
-
-## 🔄 Structure Conversion (CIF → XYZ)
-
-We provide a helper script to convert raw CIF structures into `.xyz` format for downstream processing:  
-👉 [XYZ_Generator.py](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py)
+The data were filtered, cleaned, and standardized following the published protocol.
 
 ---
 
-## 🧮 Feature Generation
+## Structure Conversion
 
-CA features are generated directly from MOF structures.  
-Our construction draws on the algebraic framework of Grayson & Stillman (2002):  
+We include a script to convert CIF files into `.xyz` format:  
+[XYZ_Generator.py](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py)
+
+---
+
+## Feature Generation
+
+The CA features are generated directly from MOF structures.  
+They follow the approach of:
 
 > D. R. Grayson and M. E. Stillman. *Macaulay2: a software system for research in algebraic geometry*, 2002.  
 
-These invariants are adapted to MOFs, creating **category-specific algebraic descriptors** that can be used for machine learning.
+These algebraic ideas are adapted to MOFs to create category-specific descriptors for machine learning.
 
 ---
 
-## 📑 Supported Properties
+## Properties Supported
 
-The training code supports the following property files:
+The training code works with four property files:
 
 - `HenrysconstantN2.xlsx`  
 - `HenrysconstantO2.xlsx`  
 - `N2uptakemolkg.xlsx`  
 - `O2uptakemolkg.xlsx`  
 
-Each Excel dataset must include:  
-- A **MOF ID column** (default: `MOFRefcodes`)  
-- A **property value column**  
+Each file must contain:  
+- A MOF ID column (`MOFRefcodes`)  
+- A property value column  
 
-➡️ These files are available in the [`data`](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data) folder.  
-The MOF IDs must match those in your **features CSV**.
-
----
-
-## 📂 Features
-
-- **Input file**: Features CSV, generated separately using the CA feature extraction pipeline.  
-- **One row = one MOF** with its descriptors.  
+The datasets are provided in the [`data`](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/data) folder.
 
 ---
 
-## ⚙️ Training Protocol
+## Features
+
+- Input file: a features CSV, generated using the CA feature extraction pipeline.  
+- Each row represents one MOF.  
+
+---
+
+## Training
 
 For each property:  
-- 🔀 Perform **10 random splits**  
-  - 80% training / 10% validation / 10% testing  
-- 🏋️ Train **10 Gradient Boosting models** per split  
-- 📊 Average predictions across models  
-- ✅ Compute metrics (MAE, RMSE, Pearson’s R_p²)  
-- 📈 Final score = **mean across 10 splits**
+- Perform 10 random splits (80% train / 10% validation / 10% test)  
+- Train 10 Gradient Boosting models per split  
+- Average predictions across models  
+- Compute MAE, RMSE, and Pearson’s R²  
+- Report the mean score across splits
