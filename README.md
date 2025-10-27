@@ -23,6 +23,9 @@ The data were filtered, cleaned, and standardized following the published protoc
 We include a script to convert CIF files into `.xyz` format:  
 [XYZ_Generator.py](https://github.com/CSKhaemba1/MOF-CSCA/blob/main/codes/XYZ_Generator.py)
 
+The converted XYZ files, expanded into supercells (~64 Å), are available in the [XYZ_Generated](https://github.com/CSKhaemba1/MOF-CSCA/tree/main/data/XYZ_Generated) folder.
+
+
 ---
 
 ## Feature Generation
