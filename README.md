@@ -62,13 +62,6 @@ The datasets are provided in the [`data`](https://github.com/CSKhaemba1/MOF-CSCA
 
 ---
 
-## Features
-
-- Input file: a features CSV, generated using the CA feature extraction pipeline.  
-- Each row represents one MOF.  
-
----
-
 ## Training
 
 For each property:  
