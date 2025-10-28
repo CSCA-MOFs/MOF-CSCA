@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from __future__ import annotations
 import argparse, os, re, json
 import numpy as np, pandas as pd
@@ -236,3 +233,4 @@ if __name__ == "__main__":
     os.environ.setdefault("MKL_NUM_THREADS", "1")
     os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
     main()
+
