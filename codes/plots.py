@@ -1,16 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
-Re-plot 2×2 scatter panel (publication style) from saved artifacts.
+2×2 scatter panel.
 
 Reads:
   <plots_dir>/{prop}_plot_points_dedup.csv
-  <plots_dir>/{prop}_plot_meta.json   (optional; not required for metrics)
 
 Upper-left of each panel shows:
-  - R^2  (coefficient of determination, recomputed from points)
-  - MAE  (recomputed from points)
+  - R^2  
+  - MAE  
 """
 
 from __future__ import annotations
@@ -20,7 +17,6 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-# ---------------- CLI ----------------
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Plot 2×2 scatter panel from saved artifacts.")
     p.add_argument("--plots_dir", required=True, type=str,
@@ -32,7 +28,6 @@ def parse_args() -> argparse.Namespace:
                    help="If set, apply preset axis limits per property; else autoscale with 1–99% trimming.")
     return p.parse_args()
 
-# ---------------- Preset axis overrides (optional) ----------------
 AXIS_OVERRIDES_PRESET = {
     "HenrysconstantN2": {"xleft": -1e-6, "xmax": 9e-6,  "yleft": -1e-6, "ymax": 0.8e-5},
     "HenrysconstantO2": {"xleft": -1e-6, "xmax": 10e-6, "yleft": -1e-6, "ymax": 1.0e-5},
@@ -40,7 +35,6 @@ AXIS_OVERRIDES_PRESET = {
     "O2uptakemolkg":    {"xleft": -1e-1, "xmax": 10e-1, "yleft": -1e-1, "ymax": 1.0e-0},
 }
 
-# ---------------- Style ----------------
 BASE_FONT = 22
 plt.rcParams.update({
     "figure.dpi": 150, "savefig.dpi": 300,
@@ -81,7 +75,6 @@ MATH = {
     "c_all":r"$C_{\mathrm{all}}$","unknown":r"$\mathrm{unknown}$",
 }
 
-# ---------------- Helpers ----------------
 def _box(ax, lw=0.9):
     for s in ("top","right","bottom","left"):
         ax.spines[s].set_visible(True); ax.spines[s].set_linewidth(lw)
@@ -151,7 +144,6 @@ def _MAE_from_points(y, yhat):
     y = np.asarray(y, float); yhat = np.asarray(yhat, float)
     return float(np.mean(np.abs(yhat - y)))
 
-# ---------------- Plot panel ----------------
 def plot_panel(plots_dir: str, props: list[str], use_default_overrides: bool):
     if len(props) != 4:
         raise SystemExit("--props must specify exactly 4 properties (comma-separated).")
@@ -175,7 +167,6 @@ def plot_panel(plots_dir: str, props: list[str], use_default_overrides: bool):
         x0, y0 = _fit_line(ax, df["y"], df["yhat"])
         ax.plot(x0, y0, color=REG_LINE, linewidth=2.0, zorder=3)
 
-        # Metrics from saved points
         R2  = _R2_from_points(df["y"].to_numpy(), df["yhat"].to_numpy())
         MAE = _MAE_from_points(df["y"].to_numpy(), df["yhat"].to_numpy())
         ax.text(0.02, 0.975, rf"$R^2$ = {R2:.2f}",
@@ -208,7 +199,6 @@ def plot_panel(plots_dir: str, props: list[str], use_default_overrides: bool):
     out_png = os.path.join(plots_dir, "four_props_scatter_panel_replot.png")
     fig.savefig(out_png, bbox_inches="tight")
     plt.show(); plt.close(fig)
-    print(f"✅ Saved: {out_png}")
 
 def main():
     a = parse_args()
@@ -217,3 +207,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
