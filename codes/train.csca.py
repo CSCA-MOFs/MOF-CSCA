@@ -1,8 +1,5 @@
 """
-Train CSCAmodels (GBRT) saves
-- {prop}_plot_points_dedup.csv  (mof_id, y, yhat, cls)
-- {prop}_plot_meta.json         (R2_concat, MAE_concat, RMSE_concat, rp2_concat, counts)
-
+Train CSCAmodels (GBRT) 
 - n_splits data splits (default 10; seeds start at --data_seed_start).
 - For each split, average predictions from --seed_count model seeds
   (starting at --seed_start, default 13..22).
@@ -211,7 +208,6 @@ def train_property(
     mae  = float(mean_absolute_error(y_true_all, y_pred_all))
     rmse = float(math.sqrt(mean_squared_error(y_true_all, y_pred_all)))
 
-    # Save artifacts (dedup by mof_id; mean yhat across repeats; mode class)
     df_points = pd.DataFrame({
         "mof_id": ids_all.astype(str),
         "y": y_true_all.astype(float),
@@ -318,3 +314,4 @@ if __name__ == "__main__":
     os.environ.setdefault("MKL_NUM_THREADS", "1")
     os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
     main()
+
